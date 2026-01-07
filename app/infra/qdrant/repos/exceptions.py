@@ -1,0 +1,2 @@
+class CollectionNotExist(Exception):
+    pass
