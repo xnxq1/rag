@@ -1,7 +1,7 @@
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
 
+from fastapi import FastAPI
 
 logger = logging.getLogger(__name__)
 
@@ -14,13 +14,12 @@ async def lifespan(app: FastAPI):
 
 
 def create_app() -> FastAPI:
-
     # logger.info("Initializing application", version=settings.app_version)
 
     app = FastAPI(
-        title='MEGA RAG',
+        title="MEGA RAG",
         description="Mini Ledger",
-        version='1',
+        version="1",
         lifespan=lifespan,
     )
 

@@ -1,2 +1,2 @@
-class CollectionNotExist(Exception):
+class CollectionNotExistError(Exception):
     pass
