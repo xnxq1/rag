@@ -14,8 +14,6 @@ async def lifespan(app: FastAPI):
 
 
 def create_app() -> FastAPI:
-    # logger.info("Initializing application", version=settings.app_version)
-
     app = FastAPI(
         title="MEGA RAG",
         description="Mini Ledger",

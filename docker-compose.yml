@@ -8,10 +8,12 @@ services:
     environment:
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
+      - HF_HOME=/root/.cache/huggingface
     depends_on:
       - qdrant
     volumes:
       - ./:/app
+      - hf_cache:/root/.cache/huggingface
     command: ["uv", "run", "python", "manage.py", "start-api"]
 
   qdrant:
@@ -25,3 +27,4 @@ services:
 
 volumes:
   qdrant_data:
+  hf_cache:
