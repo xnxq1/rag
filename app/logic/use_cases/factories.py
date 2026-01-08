@@ -13,6 +13,7 @@ def embedding_use_case_factory() -> CreateEmbeddingFromRussianWordsUseCase:
 
 
 def recurcive_text_splitter_use_case_factory() -> ChunkingUseCase:
+    # TODO: вынести параметры в env
     return ChunkingUseCase(
         splitter=RecursiveCharacterTextSplitter(
             chunk_size=500,

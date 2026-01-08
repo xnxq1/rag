@@ -1,10 +1,8 @@
-import uuid
-
 from qdrant_client import AsyncQdrantClient
-from qdrant_client.http.models import Distance, PointStruct, VectorParams, VectorStruct
+from qdrant_client.http.models import Distance, VectorParams
 
 from app.infra.qdrant.repos.exceptions import CollectionNotExistError
-from app.infra.qdrant.repos.interfaces import QdrantInterface
+from app.infra.qdrant.repos.interfaces import QdrantInterface, QdrantPoint
 
 
 class QdrantRepo(QdrantInterface):
@@ -19,17 +17,11 @@ class QdrantRepo(QdrantInterface):
             )
 
     async def create_or_update_vector(
-        self, collection_name: str, vector: VectorStruct, payload: dict
+        self, collection_name: str, points: list[QdrantPoint]
     ) -> None:
         if not await self.client.collection_exists(collection_name=collection_name):
             raise CollectionNotExistError(f"Collection {collection_name} does not exist")
         await self.client.upsert(
             collection_name=collection_name,
-            points=[
-                PointStruct(
-                    id=str(uuid.uuid4()),
-                    vector=vector,
-                    payload=payload,
-                )
-            ],
+            points=points,
         )

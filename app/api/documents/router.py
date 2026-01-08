@@ -7,7 +7,9 @@ router = APIRouter(prefix="/documents", tags=["Documents"])
 
 
 @router.post("/")
-async def load_document(document: UploadFile = File(...)) -> dict:
+async def load_document(collection_name: str, document: UploadFile = File(...)) -> dict:
     pipeline = ingest_pipeline_factory()
-    await pipeline.execute(ServiceFile(data=document.file, filename=document.filename))
+    await pipeline.execute(
+        ServiceFile(data=document.file, filename=document.filename), collection_name
+    )
     return {"success": True}

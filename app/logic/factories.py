@@ -1,3 +1,4 @@
+from app.infra.qdrant.repos.factories import qdrant_repo_factory
 from app.logic.ingest import IngestPipeline
 from app.logic.use_cases.factories import (
     docx_reader_use_case_factory,
@@ -13,4 +14,5 @@ def ingest_pipeline_factory() -> IngestPipeline:
         chunking_use_case=recurcive_text_splitter_use_case_factory(),
         pdf_reader_use_case=pdf_reader_use_case_factory(),
         docx_reader_use_case=docx_reader_use_case_factory(),
+        qdrant_repo=qdrant_repo_factory(),
     )

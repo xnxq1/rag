@@ -1,10 +1,13 @@
 import asyncio
 import dataclasses
+import uuid
 from typing import BinaryIO
 
 from numpy import ndarray
 
 from app.infra.logging import get_logger
+from app.infra.qdrant.repos.interfaces import QdrantPoint
+from app.infra.qdrant.repos.repos import QdrantRepo
 from app.logic.exceptions import NotSupportedFormatError
 from app.logic.use_cases.chunking import ChunkingUseCase
 from app.logic.use_cases.embedding import CreateEmbeddingFromRussianWordsUseCase
@@ -33,17 +36,19 @@ class IngestPipeline:
         chunking_use_case: ChunkingUseCase,
         pdf_reader_use_case: PdfReaderUseCase,
         docx_reader_use_case: DocxReaderUseCase,
+        qdrant_repo: QdrantRepo,
     ):
         self.embedding_use_case = embedding_use_case
         self.chunking_use_case = chunking_use_case
         self.pdf_reader_use_case = pdf_reader_use_case
         self.docx_reader_use_case = docx_reader_use_case
+        self.qdrant_repo = qdrant_repo
         self.format_to_reader_map = {
             "docx": self.docx_reader_use_case,
             "pdf": self.pdf_reader_use_case,
         }
 
-    async def execute(self, file: File):
+    async def execute(self, file: File, collection_name: str):
         reader = self.format_to_reader_map.get(file.filename.split(".")[-1])
         if not reader:
             raise NotSupportedFormatError(
@@ -51,6 +56,14 @@ class IngestPipeline:
             )
         pages = await reader.handle(document=file.data)
         processed_pages = await self._process_pages_parallel(pages, file.filename)
+        points = []
+        for page in processed_pages:
+            for embedding in page.embeddings:
+                points.append(QdrantPoint(vector=embedding, id=uuid.uuid4(), payload=page.metadata))
+
+        await self.qdrant_repo.create_or_update_vector(
+            collection_name=collection_name, points=points
+        )
         logger.debug(f"Processed {len(processed_pages)} pages, payload: {processed_pages}")
 
     async def _process_pages_parallel(
