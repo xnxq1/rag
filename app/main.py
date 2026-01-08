@@ -1,9 +1,11 @@
-import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-logger = logging.getLogger(__name__)
+from app.api.documents import router as document_router
+from app.infra.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 @asynccontextmanager
@@ -20,6 +22,7 @@ def create_app() -> FastAPI:
         version="1",
         lifespan=lifespan,
     )
+    app.include_router(document_router)
 
     @app.get("/")
     async def root():
