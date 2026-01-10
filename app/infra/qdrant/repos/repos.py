@@ -31,5 +31,5 @@ class QdrantRepo(QdrantInterface):
         return await self.client.query_points(
             collection_name=collection_name,
             query=vector,
-            limit=settings.TOP_K_LIMIT,
+            limit=settings.top_k_limit,
         )
