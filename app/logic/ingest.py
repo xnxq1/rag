@@ -57,14 +57,16 @@ class IngestPipeline:
         pages = await reader.handle(document=file.data)
         processed_pages = await self._process_pages_parallel(pages, file.filename)
         points = []
+
         for page in processed_pages:
+            logger.info(f"Processing page {page.metadata}. Chunks: {page.chunks}")
             for embedding in page.embeddings:
                 points.append(QdrantPoint(vector=embedding, id=uuid.uuid4(), payload=page.metadata))
 
         await self.qdrant_repo.create_or_update_vector(
             collection_name=collection_name, points=points
         )
-        logger.debug(f"Processed {len(processed_pages)} pages, payload: {processed_pages}")
+        logger.debug(f"Processed {len(processed_pages)} pages")
 
     async def _process_pages_parallel(
         self, pages: list[PageMetaData], filename: str
@@ -78,7 +80,7 @@ class IngestPipeline:
 
                 return ProcessedPage(
                     chunks=chunks,
-                    metadata=page.metadata | {"filename": filename},
+                    metadata=page.metadata | {"filename": filename, "text": page.text},
                     embeddings=embeddings,
                 )
 

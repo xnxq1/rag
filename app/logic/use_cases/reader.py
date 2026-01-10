@@ -60,10 +60,12 @@ class DocxReaderUseCase(UseCaseInterface):
         paragraphs = []
         for i, paragraph in enumerate(doc.paragraphs):
             text = paragraph.text
-            paragraphs.append(
-                PageMetaData(text=text, metadata={"position": {"paragraph_number": i}})
-            )
+            if text:
+                paragraphs.append(
+                    PageMetaData(text=text, metadata={"position": {"paragraph_number": i}})
+                )
         # TODO: получаются маленькие куски, сделать объединение по смыслу
+        # TODO: плохой парсинг данных
         return paragraphs
 
     async def handle(self, document: BinaryIO) -> list[PageMetaData]:

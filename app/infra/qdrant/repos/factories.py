@@ -1,13 +1,13 @@
 from qdrant_client import AsyncQdrantClient
 
+from app.infra.config import settings
 from app.infra.qdrant.repos.repos import QdrantRepo
 
 
-def qdrant_repo_factory():
-    # TODO: вынести параметры в env
+def qdrant_repo_factory() -> QdrantRepo:
     return QdrantRepo(
         client=AsyncQdrantClient(
-            host="qdrant",
-            port=6333,
+            host=settings.qdrant_host,
+            port=settings.qdrant_port,
         )
     )

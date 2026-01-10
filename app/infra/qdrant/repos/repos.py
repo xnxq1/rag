@@ -1,6 +1,7 @@
 from qdrant_client import AsyncQdrantClient
-from qdrant_client.http.models import Distance, VectorParams
+from qdrant_client.http.models import Distance, QueryResponse, VectorParams
 
+from app.infra.config import settings
 from app.infra.qdrant.repos.exceptions import CollectionNotExistError
 from app.infra.qdrant.repos.interfaces import QdrantInterface, QdrantPoint
 
@@ -24,4 +25,11 @@ class QdrantRepo(QdrantInterface):
         await self.client.upsert(
             collection_name=collection_name,
             points=points,
+        )
+
+    async def search(self, collection_name, vector) -> QueryResponse:
+        return await self.client.query_points(
+            collection_name=collection_name,
+            query=vector,
+            limit=settings.TOP_K_LIMIT,
         )
