@@ -1,4 +1,5 @@
 from app.infra.llm.client import LLMClient
+from app.infra.logging import get_logger
 from app.infra.qdrant.repos.repos import QdrantRepo
 from app.logic.use_cases.embedding import EmbeddingInterface
 
@@ -6,11 +7,9 @@ system_prompt = """Ты — ассистент для ответа на FAQ ко
 Отвечай строго на основе предоставленного контекста.
 
 Правила:
-- используй только факты из контекста
-- не придумывай информацию и не галлюцинируй
-- если информации недостаточно — скажи "В контексте нет ответа"
-- отвечай кратко (1–3 предложения)
-- если есть несколько пунктов — делай списком
+- Используй только информацию из контекста
+- Если ответа нет в явном виде, но можно сделать вывод — сделай его
+- Если ответа точно нет — скажи "В контексте нет ответа"
 """
 
 prompt = """
@@ -36,6 +35,7 @@ class RAGPipeline:
 
     async def execute(self, query: str, collection_name: str) -> str:
         # TODO: добавить tiktoken, проверку на контекстное окно
+        # TODO: Добавить qeury rewriting, cross-encoder and llm reranking, переписатьь все на llamaindex
         embedding = await self.embedding_use_case.handle(sentences=[query], mode="query")
         search_result = await self.qdrant_repo.search(
             vector=embedding[0].tolist(), collection_name=collection_name
