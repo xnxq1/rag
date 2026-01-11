@@ -5,9 +5,11 @@ import unicodedata
 from typing import BinaryIO
 
 import fitz
-from docx import Document
 
+from app.infra.logging import get_logger
 from app.logic.use_cases.base import UseCaseInterface
+
+logger = get_logger(__name__)
 
 
 @dataclasses.dataclass
@@ -51,22 +53,3 @@ class PdfReaderUseCase(UseCaseInterface):
             page_metadata.text = text
 
         return pages
-
-
-class DocxReaderUseCase(UseCaseInterface):
-    @staticmethod
-    def extract_docx_text(document: BinaryIO) -> list[PageMetaData]:
-        doc = Document(document)
-        paragraphs = []
-        for i, paragraph in enumerate(doc.paragraphs):
-            text = paragraph.text
-            if text:
-                paragraphs.append(
-                    PageMetaData(text=text, metadata={"position": {"paragraph_number": i}})
-                )
-        # TODO: получаются маленькие куски, сделать объединение по смыслу
-        # TODO: плохой парсинг данных
-        return paragraphs
-
-    async def handle(self, document: BinaryIO) -> list[PageMetaData]:
-        return await asyncio.to_thread(self.extract_docx_text, document)

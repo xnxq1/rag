@@ -11,7 +11,7 @@ from app.infra.qdrant.repos.repos import QdrantRepo
 from app.logic.exceptions import NotSupportedFormatError
 from app.logic.use_cases.chunking import ChunkingUseCase
 from app.logic.use_cases.embedding import CreateEmbeddingFromRussianWordsUseCase
-from app.logic.use_cases.reader import DocxReaderUseCase, PageMetaData, PdfReaderUseCase
+from app.logic.use_cases.reader import PageMetaData, PdfReaderUseCase
 
 logger = get_logger(__name__)
 
@@ -35,16 +35,13 @@ class IngestPipeline:
         embedding_use_case: CreateEmbeddingFromRussianWordsUseCase,
         chunking_use_case: ChunkingUseCase,
         pdf_reader_use_case: PdfReaderUseCase,
-        docx_reader_use_case: DocxReaderUseCase,
         qdrant_repo: QdrantRepo,
     ):
         self.embedding_use_case = embedding_use_case
         self.chunking_use_case = chunking_use_case
         self.pdf_reader_use_case = pdf_reader_use_case
-        self.docx_reader_use_case = docx_reader_use_case
         self.qdrant_repo = qdrant_repo
         self.format_to_reader_map = {
-            "docx": self.docx_reader_use_case,
             "pdf": self.pdf_reader_use_case,
         }
 

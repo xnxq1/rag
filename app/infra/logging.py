@@ -3,10 +3,9 @@ import sys
 from typing import Any
 
 import structlog
-from pythonjsonlogger import jsonlogger
 
 
-def setup_logging(log_level: str = "INFO", json_logs: bool = True) -> None:
+def setup_logging(log_level: str = "INFO") -> None:
     structlog.configure(
         processors=[
             structlog.contextvars.merge_contextvars,
@@ -18,7 +17,7 @@ def setup_logging(log_level: str = "INFO", json_logs: bool = True) -> None:
             structlog.processors.StackInfoRenderer(),
             structlog.processors.format_exc_info,
             structlog.processors.UnicodeDecoder(),
-            (structlog.processors.JSONRenderer() if json_logs else structlog.dev.ConsoleRenderer()),
+            structlog.processors.JSONRenderer(ensure_ascii=False),
         ],
         wrapper_class=structlog.stdlib.BoundLogger,
         context_class=dict,
@@ -28,20 +27,10 @@ def setup_logging(log_level: str = "INFO", json_logs: bool = True) -> None:
 
     log_handler = logging.StreamHandler(sys.stdout)
 
-    if json_logs:
-        formatter = jsonlogger.JsonFormatter(
-            "%(asctime)s %(name)s %(levelname)s %(message)s",
-            rename_fields={
-                "asctime": "timestamp",
-                "name": "logger",
-                "levelname": "level",
-            },
-        )
-    else:
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
 
     log_handler.setFormatter(formatter)
 
