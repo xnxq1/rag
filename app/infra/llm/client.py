@@ -2,6 +2,9 @@ from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
 
 from app.infra.config import settings
+from app.infra.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 class LLMClient:
@@ -21,4 +24,12 @@ class LLMClient:
                 ChatCompletionUserMessageParam(content=user_query, role="user"),
             ],
         )
+        total_tokens = result.usage.total_tokens
+        input_tokens = result.usage.prompt_tokens
+        output_tokens = result.usage.completion_tokens
+        logger.info(
+            f"Query to {settings.llm_model} "
+            f"input_tokens: {input_tokens}, output_tokens: {output_tokens}, total_tokens: {total_tokens} "
+        )
+
         return result.choices[0].message.content

@@ -6,7 +6,7 @@ from app.api.collections import router as collections_router
 from app.api.documents import router as document_router
 from app.api.rag import router as rag_router
 from app.infra.config import settings
-from app.infra.logging import get_logger
+from app.infra.logging import get_logger, setup_logging
 
 logger = get_logger(__name__)
 
@@ -19,6 +19,7 @@ async def lifespan(app: FastAPI):
 
 
 def create_app() -> FastAPI:
+    setup_logging()
     app = FastAPI(
         title=settings.app_name,
         description=settings.app_name,
