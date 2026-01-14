@@ -17,7 +17,7 @@ class LLMClient:
     async def completions_create(self, system_prompt: str, user_query: str) -> str:
         result = await self.client.chat.completions.create(
             model=settings.llm_model,
-            temperature=0,
+            temperature=0.2,
             messages=[
                 ChatCompletionSystemMessageParam(content=system_prompt, role="system"),
                 ChatCompletionUserMessageParam(content=user_query, role="user"),
