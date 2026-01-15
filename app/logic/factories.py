@@ -6,7 +6,7 @@ from app.logic.rag import RAGPipeline
 from app.logic.use_cases.factories import (
     embedding_use_case_factory,
     recurcive_text_splitter_use_case_factory, cross_encode_rerank_use_case_factory,
-    load_url_content_reader_use_case_factory,
+    load_url_content_reader_use_case_factory, query_rewriting_use_case_factory,
 )
 
 
@@ -25,6 +25,7 @@ def rag_pipeline_factory() -> RAGPipeline:
         qdrant_repo=qdrant_repo_factory(),
         llm_client=llm_client_factory(),
         cross_encode_rerank_use_case=cross_encode_rerank_use_case_factory(),
+        query_rewriting_use_case=query_rewriting_use_case_factory(),
     )
 
 
