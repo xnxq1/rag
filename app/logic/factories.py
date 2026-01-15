@@ -5,8 +5,8 @@ from app.logic.ingest import IngestPipeline
 from app.logic.rag import RAGPipeline
 from app.logic.use_cases.factories import (
     embedding_use_case_factory,
-    pdf_reader_use_case_factory,
     recurcive_text_splitter_use_case_factory, cross_encode_rerank_use_case_factory,
+    load_url_content_reader_use_case_factory,
 )
 
 
@@ -14,8 +14,8 @@ def ingest_pipeline_factory() -> IngestPipeline:
     return IngestPipeline(
         embedding_use_case=embedding_use_case_factory(),
         chunking_use_case=recurcive_text_splitter_use_case_factory(),
-        pdf_reader_use_case=pdf_reader_use_case_factory(),
         qdrant_repo=qdrant_repo_factory(),
+        load_url_content_use_case=load_url_content_reader_use_case_factory(),
     )
 
 

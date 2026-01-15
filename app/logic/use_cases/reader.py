@@ -5,9 +5,12 @@ import unicodedata
 from typing import BinaryIO
 
 import fitz
+from langchain_community.document_loaders import RecursiveUrlLoader
+from langchain_community.document_transformers import Html2TextTransformer
 
 from app.infra.logging import get_logger
 from app.logic.use_cases.base import UseCaseInterface
+from yarl import URL
 
 logger = get_logger(__name__)
 
@@ -53,3 +56,24 @@ class PdfReaderUseCase(UseCaseInterface):
             page_metadata.text = text
 
         return pages
+
+
+class LoadUrlContentUseCase(UseCaseInterface):
+    async def handle(self, url: URL) -> list[PageMetaData]:
+        recursive_loader = RecursiveUrlLoader(
+            url=str(url),
+            max_depth=2,
+            prevent_outside=True,
+        )
+        data = await asyncio.to_thread(recursive_loader.load)
+        transformer = Html2TextTransformer()
+        docs = await asyncio.to_thread(transformer.transform_documents, data)
+        filtered = []
+        for d in docs:
+            url = d.metadata["source"]
+            if not url.endswith(('.css', '.js', '.png', '.svg', '.jpg', '.woff')):
+                filtered.append(PageMetaData(text=d.page_content, metadata={
+                    "position": {"url": d.metadata["source"]},
+                    "title": d.metadata["title"],
+                }))
+        return filtered
