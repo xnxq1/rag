@@ -27,7 +27,9 @@ class QdrantRepo(QdrantInterface):
             points=points,
         )
 
-    async def search(self, collection_name, vector, limit: int = settings.top_k_limit) -> QueryResponse:
+    async def search(
+        self, collection_name, vector, limit: int = settings.top_k_limit
+    ) -> QueryResponse:
         return await self.client.query_points(
             collection_name=collection_name,
             query=vector,

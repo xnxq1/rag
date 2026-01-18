@@ -7,6 +7,7 @@ from app.logic.use_cases.base import UseCaseInterface
 
 logger = get_logger(__name__)
 
+
 class CrossEncoderRerankingUseCase(UseCaseInterface):
     def __init__(self, cross_encoder_model: CrossEncoder):
         self.cross_encoder_model = cross_encoder_model

@@ -30,5 +30,4 @@ class QueryRewritingUseCase(UseCaseInterface):
             system_prompt=system_prompt,
             user_query=user_prompt.format(question=user_query),
         )
-        print(result)
-
+        return result

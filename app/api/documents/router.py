@@ -1,8 +1,7 @@
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter
 from yarl import URL
 
 from app.logic.factories import ingest_pipeline_factory
-from app.logic.ingest import File as ServiceFile
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
 
@@ -17,12 +16,13 @@ router = APIRouter(prefix="/documents", tags=["Documents"])
 #     )
 #     return {"success": True}
 
+
 @router.post("/url_content")
 async def load_url_content(collection_name: str, url: str) -> dict:
     pipeline = ingest_pipeline_factory()
     await pipeline.execute(
         collection_name=collection_name,
         url=URL(url),
-        content_type='url',
+        content_type="url",
     )
     return {"success": True}

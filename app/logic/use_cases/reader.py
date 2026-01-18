@@ -7,10 +7,10 @@ from typing import BinaryIO
 import fitz
 from langchain_community.document_loaders import RecursiveUrlLoader
 from langchain_community.document_transformers import Html2TextTransformer
+from yarl import URL
 
 from app.infra.logging import get_logger
 from app.logic.use_cases.base import UseCaseInterface
-from yarl import URL
 
 logger = get_logger(__name__)
 
@@ -71,9 +71,14 @@ class LoadUrlContentUseCase(UseCaseInterface):
         filtered = []
         for d in docs:
             url = d.metadata["source"]
-            if not url.endswith(('.css', '.js', '.png', '.svg', '.jpg', '.woff')):
-                filtered.append(PageMetaData(text=d.page_content, metadata={
-                    "position": {"url": d.metadata["source"]},
-                    "title": d.metadata["title"],
-                }))
+            if not url.endswith((".css", ".js", ".png", ".svg", ".jpg", ".woff")):
+                filtered.append(
+                    PageMetaData(
+                        text=d.page_content,
+                        metadata={
+                            "position": {"url": d.metadata["source"]},
+                            "title": d.metadata["title"],
+                        },
+                    )
+                )
         return filtered

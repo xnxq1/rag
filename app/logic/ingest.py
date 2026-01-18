@@ -12,7 +12,7 @@ from app.infra.qdrant.repos.repos import QdrantRepo
 from app.logic.exceptions import NotSupportedFormatError
 from app.logic.use_cases.chunking import ChunkingUseCase
 from app.logic.use_cases.embedding import CreateEmbeddingFromRussianWordsUseCase
-from app.logic.use_cases.reader import PageMetaData, PdfReaderUseCase, LoadUrlContentUseCase
+from app.logic.use_cases.reader import LoadUrlContentUseCase, PageMetaData
 
 logger = get_logger(__name__)
 
@@ -66,9 +66,7 @@ class IngestPipeline:
         )
         logger.debug(f"Processed {len(processed_pages)} pages")
 
-    async def _process_pages_parallel(
-        self, pages: list[PageMetaData]
-    ) -> list[ProcessedPage]:
+    async def _process_pages_parallel(self, pages: list[PageMetaData]) -> list[ProcessedPage]:
         semaphore = asyncio.Semaphore(5)
 
         async def process_single_page(page: PageMetaData) -> ProcessedPage:
