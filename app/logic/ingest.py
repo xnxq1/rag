@@ -69,8 +69,8 @@ class IngestPipeline:
                         vector={
                             "dense": embedding,
                             "sparse": models.SparseVector(
-                                indices=sparse_embedding['indices'].tolist(),
-                                values=sparse_embedding['values'].tolist(),
+                                indices=sparse_embedding["indices"].tolist(),
+                                values=sparse_embedding["values"].tolist(),
                             ),
                         },
                         id=uuid.uuid4(),

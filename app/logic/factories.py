@@ -43,4 +43,5 @@ def retrieval_context_sub_pipeline() -> RetrievalContextSubPipeline:
         embedding_use_case=embedding_use_case_factory(),
         query_rewriting_use_case=query_rewriting_use_case_factory(),
         qdrant_repo=qdrant_repo_factory(),
+        bm25_use_case=bm25_use_case_factory(),
     )

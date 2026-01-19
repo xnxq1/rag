@@ -1,4 +1,4 @@
-from qdrant_client import AsyncQdrantClient
+from qdrant_client import AsyncQdrantClient, models
 from qdrant_client.http.models import Distance, QueryResponse, VectorParams
 
 from app.infra.config import settings
@@ -33,5 +33,25 @@ class QdrantRepo(QdrantInterface):
         return await self.client.query_points(
             collection_name=collection_name,
             query=vector,
+            limit=limit,
+        )
+
+    async def hybrid_search(
+        self, collection_name, vector, sparse_vector, limit: int = settings.top_k_limit
+    ) -> QueryResponse:
+        return await self.client.query_points(
+            collection_name=collection_name,
+            prefetch=[
+                models.Prefetch(query=vector, using="dense", limit=20),
+                models.Prefetch(
+                    query=models.SparseVector(
+                        indices=sparse_vector["indices"].tolist(),
+                        values=sparse_vector["values"].tolist(),
+                    ),
+                    using="sparse",
+                    limit=20,
+                ),
+            ],
+            query=models.FusionQuery(fusion=models.Fusion.RRF),
             limit=limit,
         )

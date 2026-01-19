@@ -1,3 +1,4 @@
+import asyncio
 from typing import TypedDict
 
 from fastembed import SparseTextEmbedding
@@ -17,5 +18,6 @@ class BM25UseCase(UseCaseInterface):
         self.model = model
 
     async def handle(self, docs: list) -> list[SparseEmbedding]:
-        embeddings = list(self.model.embed(docs))
+        embeddings = await asyncio.to_thread(self.model.embed, docs)
+        embeddings = list(embeddings)
         return [emb.as_object() for emb in embeddings]
