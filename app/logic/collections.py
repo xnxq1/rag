@@ -1,4 +1,4 @@
-from qdrant_client.http.models import Distance, VectorParams
+from qdrant_client.http.models import Distance, SparseVectorParams, VectorParams
 
 from app.infra.qdrant.repos.repos import QdrantRepo
 
@@ -14,6 +14,7 @@ class CollectionService:
     async def create(self, collection_name: str, size: int):
         result = await self.qdrant_repo.client.create_collection(
             collection_name=collection_name,
-            vectors_config=VectorParams(distance=Distance.COSINE, size=size),
+            vectors_config={"dense": VectorParams(size=size, distance=Distance.COSINE)},
+            sparse_vectors_config={"sparse": SparseVectorParams()},
         )
         return result

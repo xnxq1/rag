@@ -5,6 +5,7 @@ from app.logic.ingest import IngestPipeline
 from app.logic.rag import RAGPipeline
 from app.logic.retrieval import RetrievalContextSubPipeline
 from app.logic.use_cases.factories import (
+    bm25_use_case_factory,
     cross_encode_rerank_use_case_factory,
     embedding_use_case_factory,
     load_url_content_reader_use_case_factory,
@@ -19,6 +20,7 @@ def ingest_pipeline_factory() -> IngestPipeline:
         chunking_use_case=recurcive_text_splitter_use_case_factory(),
         qdrant_repo=qdrant_repo_factory(),
         load_url_content_use_case=load_url_content_reader_use_case_factory(),
+        bm25_use_case=bm25_use_case_factory(),
     )
 
 

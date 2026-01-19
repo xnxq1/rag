@@ -1,8 +1,10 @@
+from fastembed import SparseTextEmbedding
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import CrossEncoder, SentenceTransformer
 
 from app.infra.config import settings
 from app.infra.llm.factories import llm_client_factory
+from app.logic.use_cases.bm25 import BM25UseCase
 from app.logic.use_cases.chunking import ChunkingUseCase
 from app.logic.use_cases.embedding import CreateEmbeddingFromRussianWordsUseCase
 from app.logic.use_cases.query_rewriting import QueryRewritingUseCase
@@ -41,3 +43,7 @@ def cross_encode_rerank_use_case_factory() -> CrossEncoderRerankingUseCase:
 
 def query_rewriting_use_case_factory() -> QueryRewritingUseCase:
     return QueryRewritingUseCase(llm_client=llm_client_factory())
+
+
+def bm25_use_case_factory() -> BM25UseCase:
+    return BM25UseCase(model=SparseTextEmbedding(model_name="Qdrant/bm25"))
