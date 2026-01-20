@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -22,6 +26,10 @@ class Settings(BaseSettings):
 
     app_name: str = Field(default="Simple RAG", alias="APP_NAME")
     app_version: str = Field(default="0.1.0", alias="APP_VERSION")
+
+    langsmith_tracing: bool = Field(default=False, alias="LANGCHAIN_TRACING_V2")
+    langsmith_api_key: str | None = Field(default=None, alias="LANGSMITH_API_KEY")
+    langsmith_project: str = Field(default="rag-project", alias="LANGSMITH_PROJECT")
 
 
 def get_settings() -> Settings:

@@ -2,6 +2,7 @@ from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
 
 from app.infra.config import settings
+from app.infra.llm.tracing import tracer
 from app.infra.logging import get_logger
 
 logger = get_logger(__name__)
@@ -14,6 +15,7 @@ class LLMClient:
     ):
         self.client = client
 
+    @tracer.trace(name="LLM Call", run_type="llm")
     async def completions_create(self, system_prompt: str, user_query: str) -> str:
         result = await self.client.chat.completions.create(
             model=settings.llm_model,

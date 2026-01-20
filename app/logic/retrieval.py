@@ -1,6 +1,7 @@
 import asyncio
 
 from app.infra.config import settings
+from app.infra.llm.tracing import tracer
 from app.infra.logging import get_logger
 from app.infra.qdrant.repos.repos import QdrantRepo
 from app.logic.use_cases.bm25 import BM25UseCase
@@ -23,6 +24,7 @@ class RetrievalContextSubPipeline:
         self.query_rewriting_use_case = query_rewriting_use_case
         self.bm25_use_case = bm25_use_case
 
+    @tracer.trace(name="Retrieval sub pipeline", run_type="retriever")
     async def execute(self, query: str, collection_name: str) -> list:
         query = await self.query_rewriting_use_case.handle(query)
         logger.info(f"Rewriting query {query}")

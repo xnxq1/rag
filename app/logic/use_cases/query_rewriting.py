@@ -1,4 +1,5 @@
 from app.infra.llm.client import LLMClient
+from app.infra.llm.tracing import tracer
 from app.logic.use_cases.base import UseCaseInterface
 
 
@@ -6,6 +7,7 @@ class QueryRewritingUseCase(UseCaseInterface):
     def __init__(self, llm_client: LLMClient):
         self.llm_client = llm_client
 
+    @tracer.trace(name="Query rewriting", run_type="chain")
     async def handle(self, user_query: str):
         system_prompt = """Перепиши вопрос так, чтобы он был полным, явным и грамматически правильным.
 

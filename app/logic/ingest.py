@@ -63,7 +63,9 @@ class IngestPipeline:
 
         for page in processed_pages:
             # logger.info(f"Processing page {page.metadata}. Chunks: {page.chunks}")
-            for embedding, sparse_embedding in zip(page.embeddings, page.sparse_embeddings):
+            for embedding, sparse_embedding, chunk in zip(
+                page.embeddings, page.sparse_embeddings, page.chunks
+            ):
                 points.append(
                     QdrantPoint(
                         vector={
@@ -74,7 +76,10 @@ class IngestPipeline:
                             ),
                         },
                         id=uuid.uuid4(),
-                        payload=page.metadata,
+                        payload={
+                            **page.metadata,
+                            "text": chunk,
+                        },
                     )
                 )
 
@@ -93,7 +98,7 @@ class IngestPipeline:
                 sparse_embeddings = await self.bm25_use_case.handle(chunks)
                 return ProcessedPage(
                     chunks=chunks,
-                    metadata=page.metadata | {"text": page.text},
+                    metadata=page.metadata,
                     embeddings=embeddings,
                     sparse_embeddings=sparse_embeddings,
                 )
