@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     qdrant_host: str = Field(default="qdrant", alias="QDRANT_HOST")
     qdrant_port: str = Field(default=6333, alias="QDRANT_PORT")
     top_k_limit: int = Field(default=3, alias="TOP_K_LIMIT")
+    rag_attempts: int = Field(default=3, alias="RAG_ATTEMPTS")
 
     chunk_size: int = Field(default=500, alias="CHUNK_SIZE")
     chunk_overlap: int = Field(default=100, alias="CHUNK_OVERLAP")

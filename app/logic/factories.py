@@ -2,7 +2,9 @@ from app.infra.llm.factories import llm_client_factory
 from app.infra.qdrant.repos.factories import qdrant_repo_factory
 from app.logic.collections import CollectionService
 from app.logic.ingest import IngestPipeline
-from app.logic.rag import RAGPipeline
+from app.logic.rag.multi_hop import MultiHopContextSubPipeline
+from app.logic.rag.single_hop import SingleHopContextSubPipeline
+from app.logic.rag.rag import RAGPipeline
 from app.logic.retrieval import RetrievalContextSubPipeline
 from app.logic.use_cases.factories import (
     bm25_use_case_factory,
@@ -23,12 +25,24 @@ def ingest_pipeline_factory() -> IngestPipeline:
         bm25_use_case=bm25_use_case_factory(),
     )
 
+def multihop_pipeline_factory() -> MultiHopContextSubPipeline:
+    return MultiHopContextSubPipeline(
+        cross_encode_rerank_use_case=cross_encode_rerank_use_case_factory(),
+        retrieval_context_sub_pipeline=retrieval_context_sub_pipeline(),
+    )
+
+def singlehop_pipeline_factory() -> SingleHopContextSubPipeline:
+    return SingleHopContextSubPipeline(
+        cross_encode_rerank_use_case=cross_encode_rerank_use_case_factory(),
+        retrieval_context_sub_pipeline=retrieval_context_sub_pipeline(),
+    )
 
 def rag_pipeline_factory() -> RAGPipeline:
     return RAGPipeline(
         llm_client=llm_client_factory(),
-        cross_encode_rerank_use_case=cross_encode_rerank_use_case_factory(),
-        retrieval_context_sub_pipeline=retrieval_context_sub_pipeline(),
+        multi_hop=multihop_pipeline_factory(),
+        single_hop=singlehop_pipeline_factory(),
+        reranking_use_case=cross_encode_rerank_use_case_factory(),
     )
 
 

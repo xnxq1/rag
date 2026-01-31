@@ -1,0 +1,158 @@
+[
+  {
+    "question": "Нужно ли указывать назначение платежа в Antarctic Wallet?",
+    "gold_answer": "Нет, при оплате через Antarctic Wallet вы сканируете QR-код для оплаты по СБП, который формирует магазин или сервис. Дополнительно ничего указывать не требуется.",
+    "context_passages": ["Нет, при оплате через Antarctic Wallet вы сканируете QR-код для оплаты по СБП, который формирует магазин или сервис."],
+    "difficulty": "easy",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq"
+  },
+  {
+    "question": "Какие персональные данные собирает Antarctic Wallet при регистрации?",
+    "gold_answer": "При регистрации аккаунта собираются: Telegram ID, электронная почта, логин и IP-адрес.",
+    "context_passages": ["Telegram ID", "Электронная почта", "Логин", "IP-адрес"],
+    "difficulty": "easy",
+    "category": "Privacy",
+    "source_url": "https://antarcticwallet.com/privacy-policy/ru"
+  },
+  {
+    "question": "Как отписаться от маркетинговых рассылок?",
+    "gold_answer": "Можно отписаться в любое время, перейдя по ссылке \"отписаться\" в нижней части писем. Запрос будет обработан незамедлительно.",
+    "context_passages": ["вы можете отписаться в любое время, перейдя по ссылке \"отписаться\" в нижней части наших писем"],
+    "difficulty": "easy",
+    "category": "Privacy",
+    "source_url": "https://antarcticwallet.com/privacy-policy/ru"
+  },
+  {
+    "question": "Что такое Simplified Due Diligence в Antarctic Wallet?",
+    "gold_answer": "Simplified Due Diligence (SDD) — это упрощённая проверка, которая может применяться в ограниченных случаях, если клиент или транзакция считаются мало рискованными и если это разрешено применимым законодательством. Означает сбор меньшего количества данных.",
+    "context_passages": ["если клиент или транзакция считаются мало рискованными и если это разрешено применимым законодательством, Antarctic Wallet может применить simplified due diligence"],
+    "difficulty": "medium",
+    "category": "AML",
+    "source_url": "https://antarcticwallet.com/aml/ru"
+  },
+  {
+    "question": "Как разрешаются споры с Antarctic Wallet?",
+    "gold_answer": "Споры разрешаются через обязательный арбитраж в соответствии с правилами HKIAC. Предусмотрено уведомление о споре и внесудебное урегулирование. Пользователь отказывается от суда присяжных и групповых исков.",
+    "context_passages": ["Обязательный арбитраж", "Проведение арбитража в соответствии с правилами HKIAC", "Отказ от суда присяжных и групповых исков"],
+    "difficulty": "medium",
+    "category": "Terms",
+    "source_url": "https://antarcticwallet.com/terms-of-use/ru"
+  },
+  {
+    "question": "Зачем нужны процедуры ПОД/ФТ?",
+    "gold_answer": "Процедуры ПОД/ФТ защищают как пользователя, так и компанию, гарантируя, что подозрительные средства не попадут в систему бесконтрольно.",
+    "context_passages": ["Эта мера защищает как пользователя, так и компанию, гарантируя, что подозрительные средства не попадут в систему бесконтрольно"],
+    "difficulty": "medium",
+    "category": "AML",
+    "source_url": "https://antarcticwallet.com/aml/ru"
+  },
+  {
+    "question": "Нужно ли платить налоги при использовании Antarctic Wallet?",
+    "gold_answer": "Информация о налогах не представлена в контексте.",
+    "context_passages": [],
+    "difficulty": "hard",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq",
+    "note": "Вопрос упоминается, но ответ не предоставлен — тест на отсутствие информации"
+  },
+  {
+    "question": "Что можно делать в Antarctic Wallet кроме оплаты по QR-коду?",
+    "gold_answer": "Через приложение можно: пополнять баланс Steam 1:1 (платите только комиссию сети), оплачивать мобильную связь, оплачивать товары и услуги по ссылке (если сайт не выводит QR), переводить криптовалюту внутри кошелька друзьям без комиссии.",
+    "context_passages": ["пополнять баланс Steam 1:1", "оплачивать мобильную связь", "оплачивать товары и услуги по ссылке", "переводить криптовалюту внутри кошелька друзьям без комиссии"],
+    "difficulty": "easy",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq"
+  },
+  {
+    "question": "Есть ли комиссия за перевод крипты друзьям?",
+    "gold_answer": "Нет, переводы криптовалюты внутри кошелька друзьям без комиссии.",
+    "context_passages": ["переводить криптовалюту внутри кошелька друзьям без комиссии"],
+    "difficulty": "easy",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq"
+  },
+  {
+    "question": "Можно ли пополнить Steam через Antarctic Wallet?",
+    "gold_answer": "Да, можно пополнять баланс Steam 1:1, платите только комиссию сети.",
+    "context_passages": ["пополнять баланс Steam 1:1 (платите только комиссию сети)"],
+    "difficulty": "easy",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq"
+  },
+  {
+    "question": "Как оплатить если на сайте нет QR-кода?",
+    "gold_answer": "Можно оплачивать товары и услуги по ссылке, если сайт не выводит QR.",
+    "context_passages": ["оплачивать товары и услуги по ссылке (если сайт не выводит QR)"],
+    "difficulty": "medium",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq"
+  },
+  {
+    "question": "Как удалить аккаунт в Antarctic Wallet?",
+    "gold_answer": "Информация о процедуре удаления аккаунта не представлена в контексте.",
+    "context_passages": [],
+    "difficulty": "hard",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq",
+    "note": "Вопрос упоминается, но ответ не предоставлен — тест на отсутствие информации"
+  },
+  {
+    "question": "Как часто пересматриваются правила мониторинга в Antarctic Wallet?",
+    "gold_answer": "Команда по соблюдению требований Antarctic Wallet пересматривает шаблоны оповещений не реже одного раза в год.",
+    "context_passages": ["Команда по соблюдению требований Antarctic Wallet должна пересматривать шаблоны оповещений не реже одного раза в год"],
+    "difficulty": "medium",
+    "category": "AML",
+    "source_url": "https://antarcticwallet.com/aml/ru"
+  },
+  {
+    "question": "Что происходит если система генерирует много ложных предупреждений?",
+    "gold_answer": "Если генерируется слишком много малозначительных предупреждений, которые не представляют риска, пороговое значение может быть повышено, чтобы сосредоточиться на более существенных случаях.",
+    "context_passages": ["если генерируется слишком много малозначительных предупреждений, которые не представляют риска, пороговое значение может быть повышено"],
+    "difficulty": "hard",
+    "category": "AML",
+    "source_url": "https://antarcticwallet.com/aml/ru"
+  },
+  {
+    "question": "Зачем нужна верификация в Antarctic Wallet?",
+    "gold_answer": "Идентификация и верификация проводятся в соответствии с Политикой AML/CFT: AML — меры по выявлению и предотвращению средств, полученных преступным путем; CFT — меры по пресечению финансирования террористической деятельности.",
+    "context_passages": ["Идентификация и верификация в соответствии с нашей Политикой AML/CFT"],
+    "difficulty": "medium",
+    "category": "Privacy",
+    "source_url": "https://antarcticwallet.com/privacy-policy/ru"
+  },
+  {
+    "question": "Что такое AML и CFT?",
+    "gold_answer": "AML — меры по выявлению и предотвращению средств, полученных преступным путем. CFT — меры по пресечению финансирования террористической деятельности.",
+    "context_passages": ["AML - меры по выявлению и предотвращению средств, полученных преступным путем", "CFT - меры по пресечению финансирования террористической деятельности"],
+    "difficulty": "easy",
+    "category": "AML",
+    "source_url": "https://antarcticwallet.com/privacy-policy/ru"
+  },
+  {
+    "question": "Где найти дополнительные правила для функций сайта?",
+    "gold_answer": "Дополнительные правила, регулирующие конкретные функции вебсайта, будут включены в Условия использования и размещены в соответствующих разделах.",
+    "context_passages": ["Дополнительные правила, регулирующие конкретные функции вебсайта, будут включены в настоящие Условия и размещены в соответствующих разделах"],
+    "difficulty": "medium",
+    "category": "Terms",
+    "source_url": "https://antarcticwallet.com/terms-of-use/ru"
+  },
+  {
+    "question": "можно телефон оплатить?",
+    "gold_answer": "Да, через приложение можно оплачивать мобильную связь.",
+    "context_passages": ["оплачивать мобильную связь"],
+    "difficulty": "easy",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq",
+    "note": "Разговорный стиль запроса"
+  },
+  {
+    "question": "а стим пополнить по курсу 1 к 1?",
+    "gold_answer": "Да, можно пополнять баланс Steam 1:1, платите только комиссию сети.",
+    "context_passages": ["пополнять баланс Steam 1:1 (платите только комиссию сети)"],
+    "difficulty": "medium",
+    "category": "FAQ",
+    "source_url": "https://antarcticwallet.com/faq",
+    "note": "Разговорный стиль с уточнением курса"
+  }
+]

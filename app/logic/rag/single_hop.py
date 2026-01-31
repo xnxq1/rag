@@ -26,34 +26,22 @@ prompt = """
         """
 
 
-class RAGPipeline:
+class SingleHopContextSubPipeline:
     def __init__(
         self,
-        llm_client: LLMClient,
         cross_encode_rerank_use_case: CrossEncoderRerankingUseCase,
         retrieval_context_sub_pipeline: RetrievalContextSubPipeline,
     ):
-        self.llm_client = llm_client
         self.cross_encode_rerank_use_case = cross_encode_rerank_use_case
         self.retrieval_context_sub_pipeline = retrieval_context_sub_pipeline
 
-    @tracer.trace(name="RAG Pipeline", run_type="chain")
-    async def execute(self, query: str, collection_name: str) -> dict:
-        # TODO: добавить tiktoken, проверку на контекстное окно
-        # TODO: Добавить qeury rewriting, cross-encoder and llm reranking, переписатьь все на llamaindex
+    @tracer.trace(name="Single hop pipeline", run_type="chain")
+    async def execute(self, query: str, collection_name: str) -> list:
         context = await self.retrieval_context_sub_pipeline.execute(
             query=query, collection_name=collection_name
         )
         rerank_context = await self.cross_encode_rerank_use_case.handle(
             query=query, docs=context, limit=3
         )
-        context = "\n-------\n".join([text for text in rerank_context])
-        logger.info(f"Final context: {context}")
-        user_prompt = prompt.format(context=context, query=query)
-        answer = await self.llm_client.completions_create(
-            system_prompt=system_prompt, user_query=user_prompt
-        )
-        return {
-            "answer": answer,
-            "context": context,
-        }
+        return rerank_context
+
